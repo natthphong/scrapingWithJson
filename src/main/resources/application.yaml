@@ -1,0 +1,17 @@
+server:
+  port: 9999
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/url
+    username: root
+    password: 0858463561
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 2
+      idle-timeout: 1000
+      allow-pool-suspension: true
+
+
+host: www.set.or.th
+
+cookie: clientUuid=f96db093-e9a6-4d9f-bdbf-834e114e9c5f; nlbi_2046605=T1E9BviYFHdoIcy4z8Sz3wAAAABGREjNI9vMWhvfJIyrNtiN; visid_incap_2046605=ZKH529d9RHCKQ8enyRiRREsTXmQAAAAAQUIPAAAAAAAjfHKBiE9rTM/ElMSWW7A5; visid_incap_2771851=HVAmYdagRaS8GRuFeSQPFUwTXmQAAAAAQUIPAAAAAAAfAiuJg/M+90jGzhSXxKwn; _cbclose=1; _cbclose23453=1; _gcl_au=1.1.251779624.1683886917; _fbp=fb.2.1683886917715.661651570; _gid=GA1.3.1197934367.1683886918; api_call_counter=5; my-quote=%5B%223K-BAT%22%2C%22A%22%5D; _uid23453=47E37C60.7; _ga=GA1.1.1024488085.1683886918; incap_ses_342_2046605=tzf1XXHluQxYGDymDwi/BJFfXmQAAAAAKsxqzsMH1e3A9Kksl5oqng==; _ga_ET2H60H2CB=GS1.1.1683907961.5.0.1683907961.60.0.0; visit_time=4077; incap_ses_342_2771851=FgymUHD/eSlIKz+mDwi/BHllXmQAAAAAwI2/NSqpVcr9bwcC/Zl5GQ==
