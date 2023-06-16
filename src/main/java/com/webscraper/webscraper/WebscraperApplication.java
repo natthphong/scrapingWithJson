@@ -9,11 +9,34 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 @SpringBootApplication
+@EnableAsync
 public class WebscraperApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebscraperApplication.class, args);
 	}
 
+
+	@Bean(name="workExecutor")
+	public Executor taskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(20);
+		executor.setMaxPoolSize(150);
+		executor.setQueueCapacity(1000);
+		executor.setThreadNamePrefix("worker-");
+		executor.initialize();
+		return executor;
+	}
+
+	@Bean(name="SymbolTask")
+	public Executor SymbolTask() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(10);
+		executor.setMaxPoolSize(150);
+		executor.setQueueCapacity(1000);
+		executor.setThreadNamePrefix("SymbolTask-");
+		executor.initialize();
+		return executor;
+	}
 
 }
