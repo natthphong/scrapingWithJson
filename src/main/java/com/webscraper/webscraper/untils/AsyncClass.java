@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Transactional
 @Component
 public class AsyncClass {
 
@@ -79,6 +78,52 @@ public class AsyncClass {
 
     }
 
+
+    @Async("workExecutor2")
+    public void getJsonWithTwo(String url, String apiUrl, PoolList poolList) throws InterruptedException {
+        List<TrTransactionModel> trTransactionModels = new ArrayList<>();
+        try {
+            URL urlTest = new URL(apiUrl);
+            HttpURLConnection http = (HttpURLConnection) urlTest.openConnection();
+            http.setRequestProperty("cookie", cookie);
+            http.setRequestProperty("Host", host);
+            http.setRequestProperty("referer", url);
+            BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
+            }
+            in.close();
+            //JSONException = not found data
+            JSONArray jsonArray = new JSONArray(response.toString());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JsonDataModel jsonStr = new ObjectMapper().readValue(jsonArray.get(i).toString(), JsonDataModel.class);
+                TrTransactionModel trTransactionModel = new TrTransactionModel();
+                OffsetDateTime offsetDateTime = OffsetDateTime.parse(jsonStr.getDate());
+                LocalDate localDate = offsetDateTime.toLocalDate();
+                trTransactionModel.setSymbol(String.valueOf(jsonStr.getSymbol()));
+                trTransactionModel.setTransaction(localDate);
+                trTransactionModel.setOpenPrice(jsonStr.getOpen());
+                trTransactionModel.setMaxPrice(jsonStr.getHigh());
+                trTransactionModel.setMinPrice(jsonStr.getLow());
+                trTransactionModel.setClosePrice(jsonStr.getClose());
+                trTransactionModel.setChangePrice(jsonStr.getChange());
+                trTransactionModel.setChangeRatio(jsonStr.getPercentChange());
+                trTransactionModel.setNoOfStock(jsonStr.getMarketIndex());
+                trTransactionModel.setVolume(jsonStr.getTotalVolume());
+                trTransactionModels.add(trTransactionModel);
+            }
+
+            poolList.addListTrTransactionModel(trTransactionModels);
+            http.disconnect();
+        } catch (Exception ex) {
+            poolList.addStartNum();
+            //not found
+            log.info("not found this link {}", url);
+        }
+
+    }
 
 
 

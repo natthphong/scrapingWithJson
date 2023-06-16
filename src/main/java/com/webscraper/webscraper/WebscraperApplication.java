@@ -20,7 +20,7 @@ public class WebscraperApplication {
 	@Bean(name="workExecutor")
 	public Executor taskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(20);
+		executor.setCorePoolSize(30);
 		executor.setMaxPoolSize(150);
 		executor.setQueueCapacity(1000);
 		executor.setThreadNamePrefix("worker-");
@@ -28,10 +28,21 @@ public class WebscraperApplication {
 		return executor;
 	}
 
+	@Bean(name="workExecutor2")
+	public Executor workExecutorTwo() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(20);
+		executor.setMaxPoolSize(150);
+		executor.setQueueCapacity(1000);
+		executor.setThreadNamePrefix("work2-");
+		executor.initialize();
+		return executor;
+	}
+
 	@Bean(name="SymbolTask")
 	public Executor SymbolTask() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(10);
+		executor.setCorePoolSize(2);
 		executor.setMaxPoolSize(150);
 		executor.setQueueCapacity(1000);
 		executor.setThreadNamePrefix("SymbolTask-");

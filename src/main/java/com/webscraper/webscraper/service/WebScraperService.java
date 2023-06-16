@@ -41,20 +41,13 @@ public class WebScraperService {
 
             List<String> symbols = urlNativeRepository.getAllUrl();
             PoolList poolList = new PoolList(trTransactionNativeRepository, symbols.size());
+
             for (String symbol : symbols) {
                 String urlApi = "https://www.set.or.th/api/set/stock/" + symbol + "/historical-trading?lang=en";
                 String url = "https://www.set.or.th/en/market/product/stock/quote/" + symbol + "/historical-trading";
-                asyncClass.getJson(url, urlApi, poolList);
+                    asyncClass.getJson(url, urlApi, poolList);
             }
 
-//            for (int i = 0; i < symbols.size(); i += 100) {
-//                int end = i + 99;
-//                if (end >= symbols.size()) {
-//                    end = symbols.size();
-//                }
-//
-//                divine(i, end, poolList, symbols);
-//            }
 
         } catch (Exception ex) {
             response.setStatus(500);
@@ -63,15 +56,20 @@ public class WebScraperService {
         return response;
     }
 
-    @Async("SymbolTask")
-    public void divine(int start, int end, PoolList poolList, List<String> symbols) throws InterruptedException {
-        for (; start < end; start++) {
-            String symbol = symbols.get(start);
-            String urlApi = "https://www.set.or.th/api/set/stock/" + symbol + "/historical-trading?lang=en";
-            String url = "https://www.set.or.th/en/market/product/stock/quote/" + symbol + "/historical-trading";
-            asyncClass.getJson(url, urlApi, poolList);
-        }
-    }
+//    @Async("SymbolTask")
+//    public void divine(int start, int end, PoolList poolList, List<String> symbols, boolean active) throws InterruptedException {
+//        for (; start < end; start++) {
+//            String symbol = symbols.get(start);
+//            String urlApi = "https://www.set.or.th/api/set/stock/" + symbol + "/historical-trading?lang=en";
+//            String url = "https://www.set.or.th/en/market/product/stock/quote/" + symbol + "/historical-trading";
+//            if (active) {
+//                asyncClass.getJson(url, urlApi, poolList);
+//            } else {
+//                asyncClass.getJsonWithTwo(url, urlApi, poolList);
+//            }
+//
+//        }
+//    }
 
 
 }
